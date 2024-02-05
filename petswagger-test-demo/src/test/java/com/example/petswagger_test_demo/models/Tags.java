@@ -1,5 +1,13 @@
 package com.example.petswagger_test_demo.models;
 
+/*
+ *  POJO for the response JSON returned by the Swagger Petstore API
+ *  Tags sub-object that is part of the response JSON
+ *  
+ *  Author: Paul Taniguchi
+ * 
+ */
+
 public class Tags {
 	
 	private int id;
@@ -14,13 +22,24 @@ public class Tags {
 		setName(name);
 	}
 	
-	private void setId(int id)
+	public void setId(int id)
 	{
 		this.id = id;
 	}
 	
-	private void setName(String name)
+	public int getId() 
+	{	
+		return this.id;
+	}
+	
+	public void setName(String name)
 	{
 		this.name = name;
 	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
 }

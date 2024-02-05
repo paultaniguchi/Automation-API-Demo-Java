@@ -2,12 +2,19 @@ package com.example.petswagger_test_demo.models;
 
 import java.util.List;
 
+/*
+ * POJO for the response JSON returned by the Swagger Petstore API 
+ * 
+ *  Author: Paul Taniguchi
+ * 
+ */
+
 public class Pet {
 	
 	private int id;
 	private Category category;
 	private String name;
-	private List<String> photosUrl;
+	private List<String> photoUrls;
 	private List<Tags> tags;
 	private String status;
 	
@@ -18,43 +25,73 @@ public class Pet {
 	{
 	}
 	
-	public Pet(int id, Category category, String name, List<String> photosUrls, List<Tags> tags, String status)
+	public Pet(int id, Category category, String name, List<String> photoUrls, List<Tags> tags, String status)
 	{
 		setId(id);
 		setCategory(category);
 		setName(name);
-		setPhotosUrl(photosUrls);
+		setPhotoUrls(photoUrls);
 		setTags(tags);
 		setStatus(status);
 	}
 	
-	private void setId(int id) 
+	public void setId(int id) 
 	{
 		this.id = id;
 	}
 	
-	private void setCategory(Category category)
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	public void setCategory(Category category)
 	{
 		this.category = category;
 	}
 	
-	private void setName(String name)
+	public Category getCategory()
+	{
+		return this.category;
+	}
+	
+	public void setName(String name)
 	{
 		this.name = name;
 	}
 	
-	private void setPhotosUrl(List<String> photosUrl)
+	public String getName()
 	{
-		this.photosUrl = photosUrl;
+		return this.name;
 	}
 	
-	private void setTags(List<Tags> tags)
+	public void setPhotoUrls(List<String> photoUrls)
+	{
+		this.photoUrls = photoUrls;
+	}
+	
+	public List<String> getPhotoUrls()
+	{
+		return this.photoUrls;
+	}
+	
+	public void setTags(List<Tags> tags)
 	{
 		this.tags = tags;
 	}
 	
-	private void setStatus(String status)
+	public List<Tags> getTags()
+	{
+		return this.tags;
+	}
+	
+	public void setStatus(String status)
 	{
 		this.status = status;
+	}
+	
+	public String getStatus()
+	{
+		return this.status;
 	}
 }

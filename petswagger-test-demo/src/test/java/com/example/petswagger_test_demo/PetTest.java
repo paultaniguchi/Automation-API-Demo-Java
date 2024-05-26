@@ -28,12 +28,14 @@ import java.util.Arrays;
 public class PetTest 
 {
 	// set up test data 
+	private int petId = 1000;
+	private String petIdEndpoint = "/" + Integer.toString(petId);
 	private Category expCategory = new Category(1001,"Fish");
 	private Tags expTags = new Tags(1002,"Taco");
 	private List<Tags> expTagList = Arrays.asList(expTags);
 	private List<String> expPhotoUrl = Arrays.asList("https://www.example.com/photo1.jpg",
 			"https://www.example.com/photo2.jpg");
-	private Pet expPet = new Pet(1000, expCategory, "Furd", expPhotoUrl, expTagList, "pending");
+	private Pet expPet = new Pet(petId, expCategory, "Furd", expPhotoUrl, expTagList, "pending");
 	
 	/*
 	 *  put in the test pet
@@ -63,7 +65,7 @@ public class PetTest
 		
 		given().
 			when().
-				get("/1000").
+				get(petIdEndpoint).
 			then().
 				assertThat().
 					statusCode(200).
@@ -87,6 +89,6 @@ public class PetTest
 		// delete test pet 
 		given().
 			when().
-				delete();
+				delete(petIdEndpoint);
 	}
 }

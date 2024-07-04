@@ -6,7 +6,7 @@ Automated test for the petstore API at https://petstore.swagger.io
 - It tests the response JSON delivered by the GET request.
 
 ## Dependencies
-- JDK 17
+- JDK 21
 - Maven
 - TestNG
 - Rest-Assured

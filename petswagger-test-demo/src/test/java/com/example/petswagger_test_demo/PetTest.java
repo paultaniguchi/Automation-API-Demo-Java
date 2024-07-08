@@ -6,9 +6,11 @@ import org.testng.annotations.AfterClass;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.petswagger_test_demo.models.Pet;
 import com.example.petswagger_test_demo.models.Category;
@@ -27,6 +29,8 @@ import java.util.Arrays;
  */
 public class PetTest 
 {
+	private static Logger logger = LoggerFactory.getLogger(PetTest.class);
+	
 	// set up test data 
 	private int petId = 1000;
 	private String petIdEndpoint = "/" + Integer.toString(petId);
@@ -36,6 +40,23 @@ public class PetTest
 	private List<String> expPhotoUrl = Arrays.asList("https://www.example.com/photo1.jpg",
 			"https://www.example.com/photo2.jpg");
 	private Pet expPet = new Pet(petId, expCategory, "Furd", expPhotoUrl, expTagList, "pending");
+	private static final int HTTP_STATUS_OK = 200;
+	
+	
+	/*
+	 *  when API request does not return status 200
+	 *  log an ERROR with errorMessage
+	 *  log a DEBUG with the response status
+	 */
+	private void logForErrorResponse(int responseStatus, String responseStatusLine, String errorMessage)
+	{
+		if (responseStatus != HTTP_STATUS_OK)
+			// ERROR log
+			logger.error(errorMessage);
+			// DEBUG log
+			logger.debug("The request returned: {}", responseStatusLine);
+	}
+	
 	
 	/*
 	 *  put in the test pet
@@ -46,11 +67,14 @@ public class PetTest
 		RestAssured.baseURI = "https://petstore.swagger.io/v2/pet";
 		
 		// create the pet in swagger.io that is used in the GET test
-		given().
+		var response = given().
 			contentType("application/json").
 			body(expPet).	
 				when().
-					post();		
+					post();
+		
+		// Log error if test pet was not created
+		logForErrorResponse(response.getStatusCode(), response.getStatusLine(), "Failed to create test pet");
 	}
 	
 
@@ -62,6 +86,7 @@ public class PetTest
 	@Test()
 	public void testGetPet()
 	{
+		logger.info("Executing GET request test");
 		
 		given().
 			when().
@@ -87,8 +112,11 @@ public class PetTest
 	public void TearDown()
 	{	
 		// delete test pet 
-		given().
+		var response = given().
 			when().
 				delete(petIdEndpoint);
+		
+		// Log error if test pet was not cleaned up
+		logForErrorResponse(response.getStatusCode(), response.getStatusLine(), "Failed to delete test pet");
 	}
 }
